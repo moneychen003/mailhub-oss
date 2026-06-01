@@ -53,6 +53,16 @@ Mailhub 是一个可自托管的 AI 邮件工作流系统。它不是另一个�
 - 用户管理、诊断面板、运行状态检查
 - Postgres 数据存储，方便备份和二次开发
 
+## 示例图
+
+### AI 收件箱 Demo
+
+![Mailhub AI inbox demo](assets/screenshots/demo-inbox.jpg)
+
+### 首次初始化
+
+![Mailhub setup page](assets/screenshots/setup-page.jpg)
+
 ## 快速开始
 
 ```bash
@@ -193,6 +203,16 @@ In short: traditional webmail helps you send and receive email. Mailhub helps yo
 - Classification rules and reply templates
 - User management, diagnostics, and runtime checks
 - Postgres storage for backup and custom development
+
+## Screenshots
+
+### AI Inbox Demo
+
+![Mailhub AI inbox demo](assets/screenshots/demo-inbox.jpg)
+
+### First-run Setup
+
+![Mailhub setup page](assets/screenshots/setup-page.jpg)
 
 ## Quick Start
 
