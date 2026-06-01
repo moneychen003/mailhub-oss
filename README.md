@@ -69,6 +69,44 @@ http://localhost:3024
 
 如果 bootstrap 脚本生成了管理员密码，它会打印出来并写入 `.env`。如果没有预设管理员密码，打开 `http://localhost:3024/setup` 创建第一个管理员。
 
+## 用 AI 帮你部署
+
+如果你准备用 ChatGPT、Claude、Codex、Cursor、Kimi 等 AI 工具帮你部署 Mailhub，建议先让 AI 读取这些文件：
+
+| 文件 | 用途 |
+|---|---|
+| `README.md` | 了解项目定位、功能和快速开始流程 |
+| `SELF_HOSTING.md` | 了解生产部署、域名、SMTP、IMAP、AI、Telegram 和备份流程 |
+| `.env.example` | 了解需要配置哪些环境变量 |
+| `docker-compose.yml` | 了解服务组成、端口、数据卷和启动依赖 |
+| `DEPLOY.md` | 了解一键 bootstrap 和部署后的检查步骤 |
+
+你可以把下面这段直接发给 AI：
+
+```text
+请帮我部署这个 Mailhub 项目。先阅读 README.md、SELF_HOSTING.md、.env.example、docker-compose.yml 和 DEPLOY.md。
+
+我的目标是：
+1. 在服务器上用 Docker Compose 部署 Mailhub
+2. 配置公开访问 URL
+3. 创建第一个管理员
+4. 配置域名 DNS、SMTP 发信、IMAP 收信
+5. 配置 AI Provider 和 Telegram 推送
+6. 最后打开 Settings -> Diagnostics，确认所有关键检查项
+
+请你不要要求我把真实密码、API Key、邮箱应用专用密码直接发给你。
+需要 secret 的地方，请先用占位符告诉我应该填什么，我会自己在服务器的 .env 或网页设置里填写。
+
+请一步一步执行，并在每一步之后验证结果。
+```
+
+安全提醒：
+
+- 不要把真实 `.env`、邮箱密码、AI API Key、Telegram Bot Token 发给公共 AI。
+- 可以让 AI 读取 `.env.example`，但不要让 AI 读取已经填好真实密钥的 `.env`。
+- 让 AI 帮你生成命令、检查日志、解释错误；真实 secret 最好由你自己粘贴到服务器或网页设置页。
+- 部署完成后，在 Settings -> Diagnostics 检查数据库、目录、SMTP、IMAP 和 AI 队列状态。
+
 ## 自托管配置清单
 
 所有常规配置都在 Settings 页面：
@@ -171,6 +209,44 @@ http://localhost:3024
 ```
 
 If the bootstrap script generated an admin password, it prints it and stores it in `.env`. If no admin password was configured, open `http://localhost:3024/setup` and create the first admin in the browser.
+
+## Deploy With an AI Assistant
+
+If you plan to use ChatGPT, Claude, Codex, Cursor, Kimi, or another AI tool to deploy Mailhub, ask it to read these files first:
+
+| File | Purpose |
+|---|---|
+| `README.md` | Understand the project, feature set, and quick-start flow |
+| `SELF_HOSTING.md` | Understand production deployment, domains, SMTP, IMAP, AI, Telegram, and backups |
+| `.env.example` | Understand required environment variables |
+| `docker-compose.yml` | Understand services, ports, volumes, and startup dependencies |
+| `DEPLOY.md` | Understand the bootstrap command and post-deploy checks |
+
+You can copy this prompt into your AI assistant:
+
+```text
+Please help me deploy this Mailhub project. First read README.md, SELF_HOSTING.md, .env.example, docker-compose.yml, and DEPLOY.md.
+
+My goals are:
+1. Deploy Mailhub on my server with Docker Compose
+2. Configure the public URL
+3. Create the first admin user
+4. Configure domain DNS, SMTP sending, and IMAP receiving
+5. Configure the AI provider and Telegram notifications
+6. Open Settings -> Diagnostics and verify the important checks
+
+Do not ask me to paste real passwords, API keys, mailbox app passwords, or bot tokens into this chat.
+When a secret is required, tell me what placeholder to use and where I should enter the real value myself, either in .env or in the web settings page.
+
+Proceed step by step and verify the result after each step.
+```
+
+Security notes:
+
+- Do not send your real `.env`, mailbox password, AI API key, or Telegram bot token to a public AI assistant.
+- It is safe to let AI read `.env.example`; do not let it read a filled production `.env`.
+- Let AI generate commands, inspect logs, and explain errors; enter real secrets yourself on the server or in the web settings page.
+- After deployment, check Settings -> Diagnostics for database, runtime paths, SMTP, IMAP, and AI queue status.
 
 ## Self-hosting Checklist
 
