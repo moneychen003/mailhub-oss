@@ -1,0 +1,98 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-mailhub}
+      POSTGRES_USER: ${POSTGRES_USER:-mailhub}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-mailhub} -d ${POSTGRES_DB:-mailhub}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/api.Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-mailhub}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-mailhub}
+      RAW_DIR: /data/raw
+      LOG_DIR: /data/logs
+      MAILHUB_UPLOAD_DIR: /data/uploads/outbound
+      MAILHUB_OUTBOUND_DIR: /data/raw/outbound
+    volumes:
+      - mailhub-data:/data
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8024/api/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    ports:
+      - "${MAILHUB_API_BIND:-127.0.0.1}:${MAILHUB_API_PORT:-8024}:8024"
+
+  classifier:
+    build:
+      context: .
+      dockerfile: docker/api.Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-mailhub}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-mailhub}
+      RAW_DIR: /data/raw
+      LOG_DIR: /data/logs
+      MAILHUB_UPLOAD_DIR: /data/uploads/outbound
+      MAILHUB_OUTBOUND_DIR: /data/raw/outbound
+    volumes:
+      - mailhub-data:/data
+    depends_on:
+      api:
+        condition: service_healthy
+    command: sh -c "python /opt/mailhub/bin/ai_worker.py"
+
+  imap-sync:
+    build:
+      context: .
+      dockerfile: docker/api.Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-mailhub}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-mailhub}
+      RAW_DIR: /data/raw
+      LOG_DIR: /data/logs
+      MAILHUB_UPLOAD_DIR: /data/uploads/outbound
+      MAILHUB_OUTBOUND_DIR: /data/raw/outbound
+    volumes:
+      - mailhub-data:/data
+    depends_on:
+      api:
+        condition: service_healthy
+    command: sh -c "while true; do python /opt/mailhub/bin/imap_sync.py --all --limit $${MAILHUB_IMAP_SYNC_LIMIT:-50} || true; sleep $${IMAP_SYNC_INTERVAL_SECONDS:-300}; done"
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/web.Dockerfile
+      args:
+        MAILHUB_API_INTERNAL_URL: http://api:8024
+    restart: unless-stopped
+    environment:
+      MAILHUB_API_INTERNAL_URL: http://api:8024
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "${MAILHUB_WEB_BIND:-0.0.0.0}:${MAILHUB_WEB_PORT:-3024}:3024"
+
+volumes:
+  postgres-data:
+  mailhub-data:

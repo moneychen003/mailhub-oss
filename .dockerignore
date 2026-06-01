@@ -1,0 +1,16 @@
+.git
+.env
+.env.*
+venv
+__pycache__
+*.pyc
+raw
+attachments
+logs
+dist
+build
+web/.next
+web/node_modules
+web/.env*
+web/tsconfig.tsbuildinfo
+.DS_Store

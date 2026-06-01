@@ -1,0 +1,34 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Node / Next.js
+node_modules/
+.next/
+*.tsbuildinfo
+
+# Secrets & runtime
+.env
+.env.local
+*.key
+*.pem
+
+# Email data (never commit real mail)
+raw/
+attachments/
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Dist
+dist/
+build/
