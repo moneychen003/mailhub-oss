@@ -6,15 +6,6 @@ Mailhub 是一个可自托管的 AI 邮件工作流系统。它不是另一个�
 
 它可以通过 IMAP 拉取已有邮箱，也可以接收自有域名邮件，把邮件存入 Postgres，再用 AI 分类、总结、提取待办，并提供 Web 收件箱、回复、定时发送、规则、模板、签名、Telegram 推送和诊断面板。
 
-## 社区和联系 / Community
-
-- Telegram 交流群 / Telegram Group: [https://t.me/+LTjvShD16aU5MDc1](https://t.me/+LTjvShD16aU5MDc1)
-- 微信个人号 / WeChat: 扫描下面二维码添加
-
-<p>
-  <img src="assets/wechat-contact.jpg" alt="WeChat contact QR code" width="240">
-</p>
-
 ## 为什么不是直接用传统邮箱？
 
 传统邮箱，比如网易邮箱、QQ 邮箱、Gmail 这类产品，适合个人收发邮件。Mailhub 更适合团队、客服、订单、账单、采购、风控、运营等“邮件就是业务流”的场景。
@@ -308,3 +299,12 @@ pnpm dev
 ## Data Safety
 
 Never commit `.env`, raw email, attachments, private keys, provider tokens, or real mailbox exports.
+
+## 社区和联系 / Community
+
+- Telegram 交流群 / Telegram Group: [https://t.me/+LTjvShD16aU5MDc1](https://t.me/+LTjvShD16aU5MDc1)
+- 微信个人号 / WeChat: 扫描下面二维码添加
+
+<p>
+  <img src="assets/wechat-contact.jpg" alt="WeChat contact QR code" width="240">
+</p>
