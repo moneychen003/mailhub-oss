@@ -303,8 +303,3 @@ Never commit `.env`, raw email, attachments, private keys, provider tokens, or r
 ## 社区和联系 / Community
 
 - Telegram 交流群 / Telegram Group: [https://t.me/+LTjvShD16aU5MDc1](https://t.me/+LTjvShD16aU5MDc1)
-- 微信个人号 / WeChat: 扫描下面二维码添加
-
-<p>
-  <img src="assets/wechat-contact.jpg" alt="WeChat contact QR code" width="240">
-</p>
